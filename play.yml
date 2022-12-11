@@ -1,0 +1,35 @@
+---
+- name: centos play
+  hosts: centos
+  become: yes
+  tasks:
+    - name: install pip on ubuntu
+      yum:
+        name: ["epel-release", "python3-pip", "python3"]
+        update_cache: yes 
+
+- name: ubuntu play
+  hosts: ubuntu
+  become: yes
+  tasks:
+    - name: install pip on ubuntu
+      apt:
+        name: python3-pip
+        update_cache: yes
+
+- name: all play
+  hosts: all
+  tasks:
+    - name: Install dependencies
+      pip:
+        name: ["opencv-python", "numpy", "opencv-python-headless", "opencv-contrib-python-headless"]
+        executable: pip3
+        virtualenv_python: /usr/bin/python3
+    - name: Download .whl on Ubuntu
+      get_url:
+        url: https://gitlab.atp-fivt.org/TPOS2022/shimanskijvl-hwCI/-/jobs/7769/artifacts/file/autocontrast/dist/autocontrast-1.0.0-py3-none-any.whl
+        dest: /home/vagrant/
+    - name: Install autocontrast on Ubuntu
+      pip:
+        name: /vagrant/autocontrast/dist/autocontrast-1.0.0-py3-none-any.whl
+        executable: pip3

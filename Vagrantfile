@@ -1,21 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$update_script1=<<SCRIPT
-apt-get update
-apt-get upgrade -y
-apt-get install -y python3-pip
-pip3 install opencv-python numpy pytest
-SCRIPT
-
-$update_script2=<<SCRIPT
-yum -y upgrade
-yum -y install epel-release
-yum install -y python3
-python3 -m pip install --upgrade pip
-python3 -m pip install opencv-python numpy pytest opencv-python-headless opencv-contrib-python-headless
-SCRIPT
-
 Vagrant.configure("2") do |config|
 
   vm_distr=['bento/ubuntu-20.04','centos/7']
@@ -30,18 +15,26 @@ Vagrant.configure("2") do |config|
   
 #   ips = ['192.168.56.21','192.168.56.31','192.168.56.41']
  #  ports = ['2222', '2223', '2224']
-   (1..2).each do |i|
+   (2..2).each do |i|
      config.vm.define "node-#{i}" do |node|
        node.vm.box = vm_distr[i - 1]
        node.vm.box_url = vm_url[i - 1]
-       if "#{i}" == "1"
-         node.vm.provision "shell", :inline => $update_script1
-       else
-         node.vm.provision "shell", :inline => $update_script2
-       end
+     #  if "#{i}" == "1"
+     #    node.vm.provision "shell", :inline => $update_script1
+     #  else
+     #    node.vm.provision "shell", :inline => $update_script2
+      # end
    #    node.vm.network "forwarded_port", guest: 22, host: "#{ports[i - 1]}" 
 #       node.vm.network :private_network, ip: "#{ips[i - 1]}"
      end
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "v"
+    ansible.playbook = "play.yml"
+    ansible.groups = {
+      "ubuntu" => ["node-1"],
+      "centos" => ["node-2"]
+    }
+  end
    end
 
 end

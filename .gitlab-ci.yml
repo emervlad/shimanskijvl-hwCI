@@ -5,20 +5,20 @@ stages:
 
 ubuntu_test:
     stage: test
-    image: "registry.gitlab.atp-fivt.org/tpos2022/shimanskijvl-practice/ubuntu_test"
+    image: "registry.gitlab.atp-fivt.org/tpos2022/shimanskijvl-hwci/ubuntu_test"
     script:
         - cd autocontrast
-        - pytest autocontrast/autocontrast_test.py
+        - pytest autocontrast_test.py
     rules:
         - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "dev"'
 
 
 centos_test:
     stage: test
-    image: "registry.gitlab.atp-fivt.org/tpos2022/shimanskijvl-practice/centos_test"
+    image: "registry.gitlab.atp-fivt.org/tpos2022/shimanskijvl-hwci/centos_test"
     script:
         - cd autocontrast
-        - pytest autocontrast/autocontrast_test.py
+        - pytest autocontrast_test.py
     rules:
         - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "dev"'
 
@@ -26,27 +26,29 @@ centos_test:
 
 ubuntu_build:
     stage: build
-    image: "registry.gitlab.atp-fivt.org/tpos2022/shimanskijvl-practice/ubuntu_test"
+    image: "registry.gitlab.atp-fivt.org/tpos2022/shimanskijvl-hwci/ubuntu_test"
     script:
         - cd autocontrast
         - pip install wheel
-        - python3 -m setup.py bdist_wheel
+        - python3 setup.py bdist_wheel
     artifacts:
         paths:
-            - dist/autocontrast-1.0.0-py3-none-any.whl
+            - autocontrast/dist/autocontrast-1.0.0-py3-none-any.whl
     rules:
-        - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
+        - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "dev"'
+      #  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
 
 
 centos_build:
     stage: build
-    image: "registry.gitlab.atp-fivt.org/tpos2022/shimanskijvl-practice/centos_test"
+    image: "registry.gitlab.atp-fivt.org/tpos2022/shimanskijvl-hwci/centos_test"
     script:
         - cd autocontrast
         - pip install wheel
-        - python3 -m setup.py bdist_wheel
+        - python3 setup.py bdist_wheel
     artifacts:
         paths:
-            - dist/autocontrast-1.0.0-py3-none-any.whl
+            - autocontrast/dist/autocontrast-1.0.0-py3-none-any.whl
     rules:
-        - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
+        - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "dev"'
+     #   - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
