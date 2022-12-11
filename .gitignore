@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+.vagrant
+
+venv/
+
+autocontrast/build/
+autocontrast/dist/
+autocontrast/autocontrast.egg-info
+
