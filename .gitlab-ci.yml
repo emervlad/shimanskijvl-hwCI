@@ -10,7 +10,7 @@ ubuntu_test:
         - cd autocontrast
         - pytest autocontrast_test.py
     rules:
-        - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "dev"'
+        - if: '($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event" )&& $CI_COMMIT_BRANCH == "dev"'
 
 
 centos_test:
@@ -20,7 +20,7 @@ centos_test:
         - cd autocontrast
         - pytest autocontrast_test.py
     rules:
-        - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "dev"'
+        - if: '($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event" )&& $CI_COMMIT_BRANCH == "dev"'
 
 
 
@@ -35,7 +35,7 @@ ubuntu_build:
         paths:
             - autocontrast/dist/autocontrast-1.0.0-py3-none-any.whl
     rules:
-        - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "dev"'
+        - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       #  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
 
 
@@ -50,5 +50,5 @@ centos_build:
         paths:
             - autocontrast/dist/autocontrast-1.0.0-py3-none-any.whl
     rules:
-        - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "dev"'
+        - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
      #   - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
