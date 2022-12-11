@@ -4,7 +4,7 @@ import tracemalloc
 import pytest
 import cv2
 import numpy as np
-from src.autocontrast import autocontrast
+from aucon.autocontrast import autocontrast
 
 
 class Profiler:
