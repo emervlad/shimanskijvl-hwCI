@@ -96,4 +96,4 @@ class TestAutocontrast:
 
     def test_time(self, result):
         elapsed_time = result[2][0]
-        assert elapsed_time < 50  # ms
+        assert elapsed_time < 100  # ms
