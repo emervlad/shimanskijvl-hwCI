@@ -8,5 +8,5 @@ venv/
 
 autocontrast/build/
 autocontrast/dist/
-autocontrast/autocontrast.egg-info
+autocontrast/*.egg-info
 
