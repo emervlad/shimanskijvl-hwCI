@@ -93,7 +93,3 @@ class TestAutocontrast:
     def test_memory(self, result):
         used_memory = result[2][1]
         assert used_memory < 1  # Mb
-
-    def test_time(self, result):
-        elapsed_time = result[2][0]
-        assert elapsed_time < 100  # ms
