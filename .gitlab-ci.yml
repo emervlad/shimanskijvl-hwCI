@@ -48,7 +48,7 @@ centos_build:
         - python3 setup.py bdist_wheel
     artifacts:
         paths:
-            - autocontrast/dist/cvutils-1.0.1-py3-none-.whl
+            - autocontrast/dist/cvutils-1.0.1-py3-none-any.whl
   #  rules:
     #    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
      #   - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
