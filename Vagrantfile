@@ -12,10 +12,10 @@ Vagrant.configure("2") do |config|
     end
 
  #   manager.vm.provision "shell", :inline => $update_script
-  
+
 #   ips = ['192.168.56.21','192.168.56.31','192.168.56.41']
  #  ports = ['2222', '2223', '2224']
-   (2..2).each do |i|
+   (1..2).each do |i|
      config.vm.define "node-#{i}" do |node|
        node.vm.box = vm_distr[i - 1]
        node.vm.box_url = vm_url[i - 1]
@@ -24,17 +24,20 @@ Vagrant.configure("2") do |config|
      #  else
      #    node.vm.provision "shell", :inline => $update_script2
       # end
-   #    node.vm.network "forwarded_port", guest: 22, host: "#{ports[i - 1]}" 
+   #    node.vm.network "forwarded_port", guest: 22, host: "#{ports[i - 1]}"
 #       node.vm.network :private_network, ip: "#{ips[i - 1]}"
+        if i == 2
+          node.vm.provision :ansible do |ansible|
+          # Disable default limit to connect to all the machines
+              ansible.limit = "all"
+              ansible.verbose = "v"
+              ansible.playbook = "play.yml"
+              ansible.groups = {
+                "ubuntu" => ["node-1"],
+                "centos" => ["node-2"]
+              }
+           end
+        end
      end
-  config.vm.provision "ansible" do |ansible|
-    ansible.verbose = "v"
-    ansible.playbook = "play.yml"
-    ansible.groups = {
-      "ubuntu" => ["node-1"],
-      "centos" => ["node-2"]
-    }
-  end
    end
-
 end

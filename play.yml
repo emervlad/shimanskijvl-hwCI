@@ -14,6 +14,11 @@
         executable: pip3
       vars:
         ansible_python_interpreter: /usr/bin/python3
+    - name: Download .whl on centos
+      get_url:
+        url: https://gitlab.atp-fivt.org/TPOS2022/shimanskijvl-hwCI/-/jobs/8780/artifacts/file/autocontrast/dist/cvutils-1.0.1-py3-none-any.whl
+        dest: /home/vagrant/
+        validate_certs: False
 
 - name: ubuntu play
   hosts: ubuntu
@@ -23,6 +28,11 @@
       apt:
         name: python3-pip
         update_cache: yes
+    - name: Download .whl on ubuntu
+      get_url:
+        url: https://gitlab.atp-fivt.org/TPOS2022/shimanskijvl-hwCI/-/jobs/8779/artifacts/file/autocontrast/dist/cvutils-1.0.1-py3-none-any.whl
+        dest: /home/vagrant/
+        validate_certs: False
 
 - name: all play
   hosts: all
@@ -34,16 +44,11 @@
         virtualenv_python: /usr/bin/python3
       vars:
         ansible_python_interpreter: /usr/bin/python3
-   
-    - name: Download .whl
-      get_url:
-        url: https://gitlab.atp-fivt.org/TPOS2022/shimanskijvl-hwCI/-/jobs/7769/artifacts/file/autocontrast/dist/autocontrast-1.0.0-py3-none-any.whl
-        dest: /home/vagrant/
-        validate_certs: False
+
   
     - name: Install autocontrast
       pip:
-        name: /vagrant/autocontrast/dist/autocontrast-1.0.0-py3-none-any.whl
+        name: /vagrant/autocontrast/dist/cvutils-1.0.1-py3-none-any.whl
         executable: pip3
       vars:
         ansible_python_interpreter: /usr/bin/python3

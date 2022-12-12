@@ -34,8 +34,8 @@ ubuntu_build:
     artifacts:
         paths:
             - autocontrast/dist/cvutils-1.0.1-py3-none-any.whl
-   # rules:
-     #   - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    rules:
+        - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && ($CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "main)"'
       #  - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
 
 
@@ -49,6 +49,6 @@ centos_build:
     artifacts:
         paths:
             - autocontrast/dist/cvutils-1.0.1-py3-none-any.whl
-  #  rules:
-    #    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    rules:
+        - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && ($CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "main)'
      #   - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH == "staging"'
