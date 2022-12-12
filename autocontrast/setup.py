@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import aucon
 
 setup(
-    name="autocontrast",
+    name="cvutils",
     version=aucon.__version__,
     author="VS",
     packages=find_packages(),
